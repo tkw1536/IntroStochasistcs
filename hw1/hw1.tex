@@ -1,0 +1,166 @@
+\documentclass[a4paper,10pt]{article}
+
+\usepackage[utf8]{inputenc}
+
+\usepackage{mathtools}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage[show]{ed}
+
+\usepackage[english]{babel}
+
+\title{Elements of Stochastic Processes\\Asssignment Sheet 1}
+\author{Tom Wiesing}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Exercise 1}
+
+\subsection{Problem}
+
+Let $X$ be a random variable on the probability space $(\Omega,\mathcal{F},P)$, which maps to
+the measurable space $(S,\mathcal{G})$. Show that the set
+\[
+  \mathcal{F}_X := \{X^{-1} (B) | B \in \mathcal{G}\}
+\]
+is a sub-$\sigma$-algebra of $\mathcal{F}$.
+
+\subsection{Solution}
+
+By definition of random variable, $\forall B \subseteq S : { X^{-1} (B) \in \mathcal{F}}$. Thus it is sufficient to show that $\mathcal{F}_X$ is a $\sigma$-algebra. For this we show that the properties of $\sigma$-algebras hold.
+
+\begin{enumerate}
+  \item $S \in \mathcal{G}$, so $X^{-1}(S) = \Omega \in \mathcal{F}_X$.
+  \item
+    Let some $A \in \mathcal{F}_X$. Then $X(A) \in \mathcal{G}$.
+    But since $\mathcal{G}$ is a $\sigma$-algebra, $S \setminus X(A) \in \mathcal{G}$.
+    Thus $X^{-1} (S \setminus X(A)) = X^{-1}(S) \setminus X^{-1}(X(A)) = \Omega \setminus A \in \mathcal{F}_X$.
+  \item
+    Pick some $A_i \in \mathcal{F}_X$ for some countable index set $i \in \mathbb{I}$.
+    Then $X(A_i) \in \mathcal{G}$. So $\bigcup_{i \in \mathbb{I}}{X(A_i)} \in \mathcal{G}$.
+    Thus $X^{-1}(\bigcup_{i \in \mathbb{I}}{X(A_i)}) = \bigcup_{i \in \mathbb{I}}{X^{-1}(X(A_i))} = \bigcup_{i \in \mathbb{I}}{A_i} \in \mathcal{F}_X$.
+\end{enumerate}
+
+{\raggedleft{}$\square$}
+
+\section{Exercise 2}
+
+\subsection{Problem}
+
+Suppose that $F(t)$ is the cumulative distribution function of a random variable.
+For some $\epsilon \in (0, 1)$ and some $t_0 \in \mathbb{R}$ define
+$$
+\tilde{F}(t) = \begin{cases}
+  (1 - \epsilon) F(t) & \mbox{if}\ t < t_0, \\
+  \epsilon + (1 - \epsilon) F(t) & \mbox{else}
+\end{cases}
+$$
+Show that $\tilde{F}(t)$ is also a cumulative distribution function.
+
+\noindent \textit{Hint: This means that you have to show the properties of Theorem 17. }
+
+\subsection{Solution}
+
+We show that the properties of a cumulative distribution function hold.
+
+\begin{enumerate}
+  \item $\lim_{t \rightarrow -\infty}{\tilde{F}(t)} = \lim_{t \rightarrow -\infty}{(1 - \epsilon) F(t)} = (1 - \epsilon) \lim_{t \rightarrow -\infty}{F(t)} = 0$.
+  \item As $1 - \epsilon > 0$, obviously $(1 - \epsilon) F(t)$ is increasing.
+  Similarly, as $\epsilon > 0$, $\epsilon + (1 - \epsilon) F(t)$ is also increasing.
+  To show that $\tilde{F}(t)$, we thus only need to check that case for $t = t_0$.
+  But $\epsilon + (1 - \epsilon) F(t) > (1 - \epsilon) F(t)$, so obviously $\tilde{F}(t)$ increasing.
+  \item For $t \neq t_0$, $\tilde{F}(t)$ is obviously continuous (and thus also right-continuous).
+  $\lim_{t \rightarrow t_0, t > t_0}{\tilde{F}(t)} = \lim_{t \rightarrow t_0, t > t_0}{\epsilon + (1 - \epsilon) F(t)} = \epsilon + (1 - \epsilon) F(t_0) = \tilde{F}(t_0)$.
+\end{enumerate}
+
+{\raggedleft{}$\square$}
+
+\section{Exercise 3}
+
+\subsection{Problem}
+
+Suppose $f,g : \mathbb{R} \rightarrow \mathbb{R}$  are two density functions. Show that for every $ \lambda \in [0, 1]$ the function $\lambda f + (1 - \lambda) g $ is also a density function.
+\textit{Hint: This means that you have to show that $\lambda f + (1 - \lambda) g $  defines a continuous random variable. }
+
+\subsection{Solution}
+
+Obviously $\lambda f + (1 - \lambda) g $ is continuous as $f, g$ are continuous.
+$\int_{\mathbb{R}}{\lambda f(x) + (1 - \lambda) g(x)\mathrm{d}x} = \lambda \int_{\mathbb{R}}{ f(x) \mathrm{d}x} + (1 - \lambda) \int_{\mathbb{R}}{ g(x)\mathrm{d}x} = \lambda + (1 - \lambda) = 1$. Thus $\lambda f + (1 - \lambda) g $ defines a continuous random variable.
+
+{\raggedleft{}$\square$}
+
+\section{Exercise 4}
+
+Let $\Omega$ denote the set of all permutations of the set $\{1,\dots,n\}$ and $F$ shall denote the power set of $\Omega$. We consider the experiment that a permutation $\sigma$ is chosen at random, where we assume that all possible choices have the same probability.
+
+\subsection{Exercise 4a)}
+
+\subsubsection{Problem}
+Let $A_i$ denote the event that $\sigma(i) = i$ for $i = 1,\dots,n$. Find $P(A_i)$.
+
+\subsubsection{Solution}
+As all outcomes have the same probability, it is suffient to count the number of permutations with a fix point at $i$. This number is equal to the number of permutations of the set $\{1,\dots,n\} \setminus \{i\}$ (we have one point fixed, all others can be permuted at will). Thus $P(A_i) = \frac{(n-1)!}{n!} = \frac{1}{n}$.
+
+\subsection{Exercise 4b)}
+
+\subsubsection{Problem}
+Let $i_1,\dots,i_k$ for some $k \leq n$ be distinct indices. Compute $P(A_{i_1} \cap \dots \cap A_{i_k})$.
+
+\subsubsection{Solution}
+$A_{i_1} \cap \dots \cap A_{i_k}$ is the event that a permutation has fix points at $i_1,\dots,i_k$. The number of such permutations is obviously given by the number of permutations of $\{1,\dots,n\} \setminus \{i_1,\dots,i_k\}$ (same argument as above). Thus $P(A_{i_1} \cap \dots \cap A_{i_k}) = \frac{(n-k)!}{n!}$.
+
+\subsection{Exercise 4c)}
+
+\subsubsection{Problem}
+Let $A$ denote the event that a random permutation $\sigma$ has no fixed point. Compute $P(A)$ and
+discuss $\lim_{n \rightarrow \infty} P(A)$.
+\textit{Hint: It is easier to compute $P(A^c)$ using the inclusion-exclusion principle. }
+
+\subsubsection{Solution}
+
+We notice that $A^c$ is the event that $\sigma$ has some fixpoint at some position. Thus $A^c = \bigcup_{i \in \{1, \dots, n\}}{A_i}$. By the inclusion-exclusion principle, we have $$
+  P(\bigcup_{i \in \{1, \dots, n\}}{A_i})
+  = \sum_{k=1}^{n}{(-1)^{k + 1}\sum_{1 \leq i_1 \leq \dots \leq n}{P(A_{i_1} \cap \dots \cap A_{i_k})}}
+$$
+$$
+  = \sum_{k=1}^{n}{(-1)^{k + 1}\sum_{1 \leq i_1 \leq \dots \leq n}{\frac{(n-k)!}{n!}}}
+  = \sum_{k=1}^{n}{(-1)^{k + 1}\frac{n!}{k!(n-k)!}\frac{(n-k)!}{n!}}
+  = \sum_{k=1}^{n}{(-1)^{k + 1}\frac{1}{k!}}
+$$.
+
+Thus $P(A) = 1 - \sum_{k=1}^{n}{(-1)^{k + 1}\frac{1}{k!}}$.
+
+$$
+  \lim_{n \rightarrow \infty}{ P(A^c) }
+   = \sum_{k=1}^{\infty}{(-1)^{k + 1}\frac{1}{k!}}
+   \leq \sum_{k=1}^{\infty}{\frac{1}{k!}}
+   = e - 1
+$$
+
+
+\subsection{Exercise 4d)}
+
+\subsubsection{Problem}
+
+Let the random variable $X(\sigma)$ denote the number of fixed points of $\sigma$, i.e $$
+  X(\sigma) = |\{1 \leq j \leq n | o(j) = j\}|
+$$. Compute $\mathbb{E}[X]$.
+
+\noindent\textit{Hint: Instead of using the distribution of $X$ it is much easier to consider $X$ as the sum of other random variables and to use linearity of the expeted value.}
+
+\subsubsection{Solution}
+
+We define random variables $X_i$ as $$X_i(\sigma) = \begin{cases}
+1 & \mbox{if} \sigma(i) = i\\
+0 & \mbox{else}
+\end{cases}$$. Obviously $X = \sum_{i = 1}^{n}{X_i}$.
+We compute $$\mathbb{E}[X_i] = 1 P(X_i = 1) + 0 P(X_i = 0) = P(X_i = 1) = P(A_i) = \frac{1}{n}$$.
+Thus $\mathbb{E}[X] = \sum_{i = 1}^{n}{\mathbb{E}[X_i]} = \sum_{i = 1}^{n}{\frac{1}{n}} = 1$.
+\end{document}

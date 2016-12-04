@@ -1,0 +1,155 @@
+\documentclass[a4paper,10pt]{article}
+
+\usepackage[utf8]{inputenc}
+
+\usepackage{mathtools}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage[show]{ed}
+
+\usepackage[english]{babel}
+
+\title{Elements of Stochastic Processes\\Asssignment Sheet 2}
+\author{Tom Wiesing}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Exercise 5}
+\subsection{Problem}
+
+Assume that $X$ is a real valued continuous random variable with density $f_X$
+and cumulative distribution function $F_X$. Show that $$
+  \mathbb{E}\left[X\right] = \int_{-\infty}^{0}{F_x(t)\mathrm{d}t} + \int_{0}^{\infty}{1 - F_x(t)\mathrm{d}t}
+$$.
+
+\subsection{Solution}
+
+For now assume that $X \geq 0$, i.e. $X$ never assumes negative values. Then we have:
+
+$$
+  \mathbb{E}\left[X\right] = \int_{0}^{\infty}{t f_x(t)\mathrm{d}t} = \int_{-\infty}^{\infty}{t P[X = t]\mathrm{d}t}
+$$
+$$
+  = \int_{0}^{\infty}{P[X > t]\mathrm{d}t} = \int_{0}^{\infty}{1 - P[X \leq t]\mathrm{d}t} = \int_{0}^{\infty}{1 - F_X(t)\mathrm{d}t}
+$$ Notice that in the middle of this computation, we switch the integral around.
+Intuitively, the integral measures the area under the curve $t P[X = t]$ on the right hand side of the origin by slicing it vertically.
+Equivalently, we can also measure the area by slicing it horizontally, which is what we are doing in the next line.
+
+To compute the expected value of a generalised random variable (which may now be negative), we write it as a sum of two random variables $$
+X = Y - Z
+$$ with both $Y, Z \geq 0$. As the expected value is linear, we can then write
+
+$$
+  \mathbb{E}\left[X\right] = \mathbb{E}\left[Y\right] - \mathbb{E}\left[Z\right] = \int_{0}^{\infty}{1 - F_Y(t)\mathrm{d}t} - \int_{0}^{\infty}{1 - F_Z(t)\mathrm{d}t}
+$$
+$$
+  = \int_{0}^{\infty}{1 - F_X(t)\mathrm{d}t} + \int_{-\infty}^{0}{F_x(t)\mathrm{d}t}
+$$.
+
+\section{Exercise 6}
+\subsection{Problem}
+
+For $\alpha \geq 1$ suppose that the random variable $X$ has the density function
+$$
+f_x(t) =
+\begin{cases}
+  \alpha e^{-\alpha t} & \mbox{if } t \geq 0 \\
+  0 & \mbox{else}
+\end{cases}
+$$ Compute $\mathbb{E}[e^X]$.
+
+\subsection{Solution}
+
+$$
+\mathbb{E}[e^X] = \int_{-\infty}^{\infty}{e^t \begin{cases}
+  \alpha e^{-\alpha t} & \mbox{if } t \geq 0 \\
+  0 & \mbox{else}
+\end{cases}\mathrm{d}t}
+= \int_{0}^{\infty}{e^t e^{-\alpha t} \mathrm{d}t}
+= \int_{0}^{\infty}{e^{(1 - \alpha) t} \mathrm{d}t}
+= \frac{1}{\alpha - 1}
+$$.
+
+{\raggedleft{}$\square$}
+
+\section{Exercise 7}
+\subsection{Problem}
+
+Let $X$ and $Y$ be independent random variables with uniform distribution in the interval $[0, 1]$. Let $Z$ = $XY$. Find
+\begin{enumerate}[a)]
+  \item the joint probability distribution function of $X$ and $Y$,
+  \item the joint probability distribution function of $X$ and $Z$,
+  \item the joint density function of $X$ and $Z$
+\end{enumerate}.
+
+\subsection{Solution}
+\subsubsection{a)}
+$$
+  F(x, y) = P[X \leq x, Y \leq y] = P[X \leq x]P[Y \leq y] = x y
+$$
+
+\subsubsection{b)}
+$$
+  F(x, z) = P[X \leq x, Z \leq z] = P[X \leq x, X + Y \leq z]
+$$
+$$
+  = P[X \leq x, Y \leq z - x] = P[X \leq x]P[Y \leq z - x] = x (z - x)
+$$
+
+\subsubsection{c)}
+$$
+  f(x, z) = P[X = x, Z = z] = P[X = x, X + Y = z]
+$$
+$$
+   = P[X = x, Y = z - x] = P[X = x]P[Y = z - x] = 1
+$$
+
+\section{Exercise 8}
+\subsection{Problem}
+
+Let $n \geq 2$ be a natural number and let the joint probability mass function of the discrete random variables $X$ and $Y$ be given by
+$$
+  p_{X,Y}(x, y) = \begin{cases}
+    k (x + y) & \mbox{if }1 \leq x,y \leq n \\
+    0 & \mbox{else}
+  \end{cases}
+$$
+
+\begin{enumerate}[a)]
+  \item Determine the value of the constant $k$.
+  \item Determine the marginal probability mass functions of $X$ and $Y$.
+  \item Find $P(X \geq Y)$. \\
+  \textit{Hint: You can simplify the calculations by observing that $P(X \geq Y) = P(Y \geq X)$. }
+\end{enumerate}
+
+\subsection{Solution}
+\subsubsection{a)}
+We observe that $$
+  1 = \sum_{x = 1}^{n}{\sum_{y = 1}^{n}{k (x + y)}} = k n^2 (n + 1)
+$$ and thus have $k = \frac{1}{n^2 (n + 1)}$.
+\subsubsection{b)}
+We observe that $$
+  P[X = x] = \sum_{y = 1}^{n}{k (x + y)} = k (\sum_{y = 1}^{n}{(x + y)})
+  = k (nx + \sum_{y = 1}^{n}{y})
+  = \frac{x}{n (n + 1)} + \frac{1}{2 n}
+$$ By symmetry, we have
+$$
+  P[Y = y] = \frac{y}{n (n + 1)} + \frac{1}{2 n}
+$$
+\subsubsection{c)}
+$$
+  P[X \leq Y] = \sum_{y=1}^{n}{P[X \leq y, Y=y]} = \sum_{y=1}^{n}{\sum_{x=1}^{y}{P[X = x, Y = y]}}
+$$
+$$
+  = \sum_{y=1}^{n}{\sum_{x=1}^{y}{k (x + y)}} = \frac{1}{2} k n (n + 1)^2 = \frac{1}{2n}
+$$
+
+
+\end{document}
